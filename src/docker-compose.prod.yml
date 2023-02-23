@@ -18,6 +18,14 @@ services:
     #   - "traefik.http.routers.spa.tls.certresolver=letsEncrypt"
     networks:
       - traefik
+  
+  traefik:
+    image: "traefik:v2.4"
+    command:
+      - "--entrypoints.web.http.redirections.entryPoint.to=web"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=http"
+      - "--entrypoints.web.address=:80"
+     # - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
 
   sfu:
     build:
@@ -31,7 +39,7 @@ services:
       - DEBUG=strive-mediasoup**
       - API_CONFERENCE_MANAGEMENT=http://0.0.0.0:5101/v1/sfu/{conferenceId}?apiKey=${STRIVE_API_KEY}
       - AMQP_CONNECTION_STRING=amqp://0.0.0.0:5672
-    network_mode: host # we need to export a large port range https://docs.docker.com/network/host/
+    # network_mode: host # we need to export a large port range https://docs.docker.com/network/host/
 
   nosqldata:
     networks:
@@ -41,7 +49,13 @@ services:
     networks:
       - traefik
 
+# networks:
+#   traefik:
+#     external:
+#       name: traefik_proxy
+
 networks:
-  traefik:
-    external:
-      name: traefik_proxy
+  traefik-net:
+      driver: overlay
+      ipam:
+          driver: default
