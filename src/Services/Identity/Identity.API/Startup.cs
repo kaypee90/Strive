@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
+using System;
 using Identity.API.Quickstart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,10 +76,6 @@ namespace Identity.API
 
             app.UseCors();
 
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
-            });
 
             app.UseStaticFiles();
 

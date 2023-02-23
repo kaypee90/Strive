@@ -2,20 +2,20 @@ version: "3.4"
 
 services:
   identity-api:
-    labels:
-      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt"
+    # labels:
+    #   - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt"
     networks:
       - traefik
 
   strive:
-    labels:
-      - "traefik.http.routers.api.tls.certresolver=letsEncrypt"
+    # labels:
+    #   - "traefik.http.routers.api.tls.certresolver=letsEncrypt"
     networks:
       - traefik
 
   webspa:
-    labels:
-      - "traefik.http.routers.spa.tls.certresolver=letsEncrypt"
+    # labels:
+    #   - "traefik.http.routers.spa.tls.certresolver=letsEncrypt"
     networks:
       - traefik
 
@@ -25,7 +25,7 @@ services:
         - MEDIASOUP_MIN_PORT=${MEDIASOUP_MIN_PORT}
         - MEDIASOUP_MAX_PORT=${MEDIASOUP_MAX_PORT}
     labels:
-      - "traefik.http.routers.sfu.tls.certresolver=letsEncrypt"
+      # - "traefik.http.routers.sfu.tls.certresolver=letsEncrypt"
       - "traefik.http.services.sfu.loadbalancer.server.url=http://host.docker.internal:3000/"
     environment:
       - DEBUG=strive-mediasoup**

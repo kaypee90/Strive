@@ -82,7 +82,7 @@ namespace Strive
                     options.TokenValidationParameters =
                         new TokenValidationParameters {ValidateAudience = false, ValidIssuer = authOptions.Issuer};
 
-                    options.RequireHttpsMetadata = !authOptions.NoSslRequired;
+                    options.RequireHttpsMetadata = false; // !authOptions.NoSslRequired;
 
                     options.AcceptTokenFromQuery();
                 });
@@ -274,8 +274,8 @@ namespace Strive
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-            else
-                app.UseHsts();
+            // else
+            //     app.UseHsts();
 
             if (env.IsDevelopment()) app.UseCors("AllowAll");
 

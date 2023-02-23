@@ -6,6 +6,6 @@ namespace Strive.Config
 
         public string? Issuer { get; set; }
 
-        public bool NoSslRequired { get; set; } = false;
+        public bool NoSslRequired { get; set; } = true;
     }
 }
