@@ -20,7 +20,7 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=web"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=http"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+     # - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
 
     ports:
       - "80:80"
