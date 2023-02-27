@@ -47,13 +47,6 @@ namespace Identity.API
                 // see https://docs.duendesoftware.com/identityserver/v5/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
             });
-            
-            services.AddSingleton<ICorsPolicyService>((container) => {
-                var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-                return new DefaultCorsPolicyService(logger) {
-                    AllowAll = true,
-                };
-            });
 
             services.AddSingleton<IUserProvider, DemoUserProvider>();
 
@@ -61,6 +54,13 @@ namespace Identity.API
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryClients(new[] {Config.BuildSpaClient(spaHost)});
             builder.AddProfileService<ProfileService>();
+            
+            services.AddSingleton<ICorsPolicyService>((container) => {
+                var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+                return new DefaultCorsPolicyService(logger) {
+                    AllowAll = true,
+                };
+            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -73,8 +73,15 @@ namespace Identity.API
                 options.KnownProxies.Clear();
             });
 
-            services.AddCors(x =>
-                x.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            // services.AddCors(x =>
+            //     x.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -83,7 +90,8 @@ namespace Identity.API
 
             if (Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            app.UseCors();
+            // app.UseCors();
+            app.UseCors("CorsPolicy");
 
             app.UseCookiePolicy(new CookiePolicyOptions
             {
