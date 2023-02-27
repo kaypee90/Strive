@@ -1,3 +1,5 @@
+#!/bin/bash
+
 export GITCOMMIT=$(git rev-parse --short HEAD)
 export GITREF="$(git log -1 --pretty=format:"%D")"
 export GITTIMESTAMP="$(git log -1 --pretty=format:"%ai")"
