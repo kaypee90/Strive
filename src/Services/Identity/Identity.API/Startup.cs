@@ -78,7 +78,7 @@ namespace Identity.API
             services.AddCors(options =>
         {
             options.AddPolicy("CorsPolicy",
-                builder => builder.AllowAnyOrigin()
+                s => s.AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
         });
