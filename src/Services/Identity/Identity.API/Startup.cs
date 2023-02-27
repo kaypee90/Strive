@@ -109,7 +109,7 @@ namespace Identity.API
         
         private class CustomCorsPolicyService : DefaultCorsPolicyService
         {
-            public CustomCorsPolicyService(ILogger<DefaultCorsPolicyService> logger)
+            public CustomCorsPolicyService(ILogger<CustomCorsPolicyService> logger)
                 :base(logger)
             {
             }
