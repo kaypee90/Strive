@@ -3,6 +3,7 @@
 
 
 using System;
+using System.Threading.Tasks;
 using Duende.IdentityServer.Services;
 using Identity.API.Quickstart;
 using Microsoft.AspNetCore.Builder;
@@ -56,8 +57,8 @@ namespace Identity.API
             builder.AddProfileService<ProfileService>();
             
             services.AddSingleton<ICorsPolicyService>((container) => {
-                var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
-                return new DefaultCorsPolicyService(logger) {
+                var logger = container.GetRequiredService<ILogger<CustomCorsPolicyService>>();
+                return new CustomCorsPolicyService(logger) {
                     AllowAll = true,
                 };
             });
@@ -105,5 +106,20 @@ namespace Identity.API
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
+        
+        private class CustomCorsPolicyService : DefaultCorsPolicyService
+        {
+            public CustomCorsPolicyService(ILogger<DefaultCorsPolicyService> logger)
+                :base(logger)
+            {
+            }
+
+            public Task<bool> IsOriginAllowedAsync(string origin)
+            {
+                return Task.FromResult(true);
+            }
+        }
+
+        
     }
 }
