@@ -74,7 +74,7 @@ namespace Identity.API
             });
 
             services.AddCors(x =>
-                x.AddDefaultPolicy(builder => builder.WithOrigins(spaHost).AllowAnyMethod().AllowAnyHeader()));
+                x.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
         }
 
         public void Configure(IApplicationBuilder app)
