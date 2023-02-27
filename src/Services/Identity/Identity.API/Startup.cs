@@ -3,6 +3,7 @@
 
 
 using System;
+using Duende.IdentityServer.Services;
 using Identity.API.Quickstart;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Identity.API
 {
@@ -44,6 +46,13 @@ namespace Identity.API
 
                 // see https://docs.duendesoftware.com/identityserver/v5/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
+            });
+            
+            services.AddSingleton<ICorsPolicyService>((container) => {
+                var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+                return new DefaultCorsPolicyService(logger) {
+                    AllowAll = true,
+                };
             });
 
             services.AddSingleton<IUserProvider, DemoUserProvider>();

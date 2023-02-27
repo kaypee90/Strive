@@ -23,7 +23,8 @@ namespace Identity.API
         {
             return new()
             {
-                ClientId = "spa", AllowedGrantTypes = GrantTypes.Code,
+                ClientId = "spa",
+                AllowedGrantTypes = GrantTypes.Code,
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile,
@@ -31,7 +32,7 @@ namespace Identity.API
                 },
                 RedirectUris = {$"{host}/authentication/callback", $"{host}/authentication/silent_callback"},
                 PostLogoutRedirectUris = {$"{host}/"},
-                AllowedCorsOrigins = {host},
+                // AllowedCorsOrigins = {host},
                 RequireClientSecret = false,
             };
         }
