@@ -81,7 +81,8 @@ namespace Identity.API
             options.AddPolicy("CorsPolicy",
                 s => s.AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials());
         });
         }
 
