@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Duende Software. All rights reserved.
 // See LICENSE in the project root for license information.
 
-
-using System;
 using System.Threading.Tasks;
 using Duende.IdentityServer.Services;
 using Identity.API.Quickstart;
@@ -81,8 +79,7 @@ namespace Identity.API
             options.AddPolicy("CorsPolicy",
                 s => s.AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
+                .AllowAnyHeader());
         });
         }
 
@@ -115,12 +112,10 @@ namespace Identity.API
             {
             }
 
-            public Task<bool> IsOriginAllowedAsync(string origin)
+            public override Task<bool> IsOriginAllowedAsync(string origin)
             {
                 return Task.FromResult(true);
             }
         }
-
-        
     }
 }
