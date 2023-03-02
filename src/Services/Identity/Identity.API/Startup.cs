@@ -53,13 +53,6 @@ namespace Identity.API
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryClients(new[] {Config.BuildSpaClient(spaHost)});
             builder.AddProfileService<ProfileService>();
-            
-            services.AddSingleton<ICorsPolicyService>((container) => {
-                var logger = container.GetRequiredService<ILogger<CustomCorsPolicyService>>();
-                return new CustomCorsPolicyService(logger) {
-                    AllowAll = true,
-                };
-            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -75,12 +68,20 @@ namespace Identity.API
             // services.AddCors(x =>
             //     x.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
             services.AddCors(options =>
-        {
-            options.AddPolicy("CorsPolicy",
-                s => s.AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-        });
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    s => s.AllowAnyOrigin()
+                    .SetIsOriginAllowedToAllowWildcardSubdomains()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+            
+            services.AddSingleton<ICorsPolicyService>((container) => {
+                var logger = container.GetRequiredService<ILogger<CustomCorsPolicyService>>();
+                return new CustomCorsPolicyService(logger) {
+                    AllowAll = true,
+                };
+            });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -90,7 +91,7 @@ namespace Identity.API
             if (Environment.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             // app.UseCors();
-            app.UseCors("CorsPolicy");
+            app.UseCors("AllowAllOrigins");
 
             app.UseCookiePolicy(new CookiePolicyOptions
             {
@@ -105,16 +106,16 @@ namespace Identity.API
             app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
         
-        private class CustomCorsPolicyService : DefaultCorsPolicyService
+        private class CustomCorsPolicyService : DefaultCorsPolicyService, ICorsPolicyService
         {
             public CustomCorsPolicyService(ILogger<CustomCorsPolicyService> logger)
-                :base(logger)
+            : base(logger)
             {
             }
 
-            public override Task<bool> IsOriginAllowedAsync(string origin)
+            public override async Task<bool> IsOriginAllowedAsync(string origin)
             {
-                return Task.FromResult(true);
+                return await Task.FromResult(true);
             }
         }
     }
