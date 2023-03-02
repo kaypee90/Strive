@@ -94,10 +94,10 @@ namespace Identity.API
             // app.UseCors();
             app.UseCors("AllowAllOrigins");
 
-            // app.UseCookiePolicy(new CookiePolicyOptions
-            // {
-            //     MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
-            // });
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
+            });
 
             app.UseStaticFiles();
 
