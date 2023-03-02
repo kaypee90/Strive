@@ -235,16 +235,18 @@ namespace Strive
 
             services.AddMediatR(typeof(Startup), typeof(CoreModule));
 
-            if (Environment.IsDevelopment())
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowAll",
-                        builder =>
-                        {
-                            builder.WithOrigins("http://localhost:55103").AllowAnyMethod().AllowAnyHeader()
-                                .AllowCredentials();
-                        });
-                });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -277,7 +279,7 @@ namespace Strive
             // else
             //     app.UseHsts();
 
-            if (env.IsDevelopment()) app.UseCors("AllowAll");
+            app.UseCors("AllowAll");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
