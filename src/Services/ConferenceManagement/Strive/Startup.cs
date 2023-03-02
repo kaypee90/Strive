@@ -238,13 +238,13 @@ namespace Strive
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
+                options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.AllowAnyOrigin()
-                            .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        builder.WithOrigins("http://timetock.com", "http://localhost:55103")
                             .AllowAnyMethod()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .AllowCredentials();
                     });
             });
 
@@ -279,7 +279,7 @@ namespace Strive
             // else
             //     app.UseHsts();
 
-            app.UseCors("AllowAll");
+            app.UseCors("CorsPolicy");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
