@@ -53,6 +53,7 @@ namespace Identity.API
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryClients(new[] {Config.BuildSpaClient(spaHost)});
             builder.AddProfileService<ProfileService>();
+            builder.AddCorsPolicyService<CustomCorsPolicyService>();
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
@@ -93,10 +94,10 @@ namespace Identity.API
             // app.UseCors();
             app.UseCors("AllowAllOrigins");
 
-            app.UseCookiePolicy(new CookiePolicyOptions
-            {
-                MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
-            });
+            // app.UseCookiePolicy(new CookiePolicyOptions
+            // {
+            //     MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
+            // });
 
             app.UseStaticFiles();
 
@@ -113,9 +114,9 @@ namespace Identity.API
             {
             }
 
-            public override async Task<bool> IsOriginAllowedAsync(string origin)
+            public override Task<bool> IsOriginAllowedAsync(string origin)
             {
-                return await Task.FromResult(true);
+                return Task.FromResult(true);
             }
         }
     }
