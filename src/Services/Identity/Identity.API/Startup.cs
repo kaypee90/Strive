@@ -96,7 +96,7 @@ namespace Identity.API
 
             app.UseCookiePolicy(new CookiePolicyOptions
             {
-                MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.Always,
+                MinimumSameSitePolicy = SameSiteMode.None, Secure = CookieSecurePolicy.SameAsRequest,
             });
 
             app.UseStaticFiles();
