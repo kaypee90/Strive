@@ -19,7 +19,7 @@ services:
 
   strive:
     labels:
-      - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=http://timetock.com,http://localhost:55103"
       - "traefik.http.middlewares.cors.headers.accessControlAllowMethods=*"
       - "traefik.http.middlewares.cors.headers.accessControlAllowHeaders=*,X-Requested-With,X-SignalR-User-Agent"
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
