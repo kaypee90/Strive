@@ -276,8 +276,8 @@ namespace Strive
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-            // else
-            //     app.UseHsts();
+            else
+                app.UseHsts();
 
             app.UseCors("CorsPolicy");
 

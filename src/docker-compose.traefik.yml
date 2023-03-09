@@ -20,7 +20,7 @@ services:
 
   strive:
     labels:
-      - "traefik.http.middlewares.corstwo.headers.accessControlAllowOriginList=*" # https://timetock.com,https://identity.timetock.com,https://sfu.identity.com"
+      - "traefik.http.middlewares.corstwo.headers.accessControlAllowOriginList=https://timetock.com,https://identity.timetock.com,https://sfu.identity.com"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowMethods=*"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowHeaders=*,X-Requested-With,X-SignalR-User-Agent"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowCredentials=true"
