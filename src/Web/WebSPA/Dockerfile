@@ -4,8 +4,7 @@ ARG NODE_IMAGE=node:14
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
-ENV ASPNETCORE_URLS=http://0.0.0.0:80;https://+:443
+ENV ASPNETCORE_URLS=http://0.0.0.0:80
 
 FROM ${NODE_IMAGE} as node-build
 WORKDIR /web
