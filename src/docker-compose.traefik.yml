@@ -30,7 +30,7 @@ services:
       - "traefik.http.services.strive.loadbalancer.healthcheck.path=/health/ready"
       - "traefik.http.routers.api.middlewares=corstwo@docker"
       - "traefik.http.routers.api.tls=true"
-      - "traefik.http.routers.strive.tls.certresolver=letsEncrypt" # added to test ssl
+      - "traefik.http.routers.api.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
       - SFU__UrlTemplate=https://sfu.${SITE_HOST}/{0}
       - Authentication__NoSslRequired=true
