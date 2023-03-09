@@ -326,10 +326,5 @@ lerna-debug.log
 .DS_Store
 Thumbs.db
 
-
-# Traefik Let's Encrypt
-acme.json
-
-
 ## Identity Server
 is-signing-key*
