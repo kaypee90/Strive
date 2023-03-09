@@ -30,7 +30,7 @@ services:
       - "traefik.http.services.strive.loadbalancer.healthcheck.path=/health/ready"
       - "traefik.http.routers.api.middlewares=corstwo@docker"
       - "traefik.http.routers.api.tls=true"
-      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
+      - "traefik.http.routers.strive.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
       - SFU__UrlTemplate=https://sfu.${SITE_HOST}/{0}
       - Authentication__NoSslRequired=true
@@ -47,7 +47,7 @@ services:
       - "traefik.http.routers.spa.entrypoints=websecure"
       - "traefik.http.services.webspa.loadbalancer.healthcheck.path=/health"
       - "traefik.http.routers.spa.tls=true"
-      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
+      - "traefik.http.routers.spa.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
       - App__IdentityUrl=https://identity.${SITE_HOST}
       - App__FrontendUrl=https://${FRONTEND_DNS_OR_IP}
@@ -69,4 +69,4 @@ services:
       - "traefik.http.services.sfu.loadbalancer.server.port=3000"
       - "traefik.http.routers.sfu.middlewares=cors@docker"
       - "traefik.http.routers.sfu.tls=true"
-      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
+      - "traefik.http.routers.sfu.tls.certresolver=letsEncrypt" # added to test ssl
