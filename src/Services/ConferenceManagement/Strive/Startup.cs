@@ -82,7 +82,7 @@ namespace Strive
                     options.TokenValidationParameters =
                         new TokenValidationParameters {ValidateAudience = false, ValidIssuer = authOptions.Issuer};
 
-                    options.RequireHttpsMetadata = false; // !authOptions.NoSslRequired;
+                    options.RequireHttpsMetadata = !authOptions.NoSslRequired;
 
                     options.AcceptTokenFromQuery();
                 });
