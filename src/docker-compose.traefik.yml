@@ -3,8 +3,8 @@ version: "3.4"
 services:
   identity-api:
     environment:
-      - IdentityServer__SpaClientHost=http://${FRONTEND_DNS_OR_IP}
-      - IdentityServer__Issuer=http://identity.${SITE_HOST}
+      - IdentityServer__SpaClientHost=https://${FRONTEND_DNS_OR_IP}
+      - IdentityServer__Issuer=https://identity.${SITE_HOST}
     labels:
       # Cors Middleware
       - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
@@ -13,26 +13,28 @@ services:
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
       - "traefik.enable=true"
       - "traefik.http.routers.identity-api.rule=Host(`identity.${SITE_HOST}`)"
-      - "traefik.http.routers.identity-api.entrypoints=web"
+      - "traefik.http.routers.identity-api.entrypoints=websecure"
       - "traefik.http.routers.identity-api.middlewares=cors@docker"
-      - "traefik.http.routers.identity-api.tls=false"
+      - "traefik.http.routers.identity-api.tls=true"
+      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
 
   strive:
     labels:
-      - "traefik.http.middlewares.corstwo.headers.accessControlAllowOriginList=http://timetock.com,http://identity.timetock.com,http://sfu.identity.com"
+      - "traefik.http.middlewares.corstwo.headers.accessControlAllowOriginList=https://timetock.com,https://identity.timetock.com,https://sfu.identity.com"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowMethods=*"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowHeaders=*,X-Requested-With,X-SignalR-User-Agent"
       - "traefik.http.middlewares.corstwo.headers.accessControlAllowCredentials=true"
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.${SITE_HOST}`)"
-      - "traefik.http.routers.api.entrypoints=web"
+      - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.services.strive.loadbalancer.healthcheck.path=/health/ready"
       - "traefik.http.routers.api.middlewares=corstwo@docker"
-      - "traefik.http.routers.api.tls=false"
+      - "traefik.http.routers.api.tls=true"
+      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
-      - SFU__UrlTemplate=http://sfu.${SITE_HOST}/{0}
+      - SFU__UrlTemplate=https://sfu.${SITE_HOST}/{0}
       - Authentication__NoSslRequired=true
-      - Authentication__Issuer=http://identity.${SITE_HOST}
+      - Authentication__Issuer=https://identity.${SITE_HOST}
 
   webspa:
     labels:
@@ -42,15 +44,16 @@ services:
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
       - "traefik.enable=true"
       - "traefik.http.routers.spa.rule=Host(`${FRONTEND_DNS_OR_IP}`)"
-      - "traefik.http.routers.spa.entrypoints=web"
+      - "traefik.http.routers.spa.entrypoints=websecure"
       - "traefik.http.services.webspa.loadbalancer.healthcheck.path=/health"
-      - "traefik.http.routers.spa.tls=false"
+      - "traefik.http.routers.spa.tls=true"
+      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
-      - App__IdentityUrl=http://identity.${SITE_HOST}
-      - App__FrontendUrl=http://${FRONTEND_DNS_OR_IP}
-      - App__ConferenceUrl=http://api.${SITE_HOST}/
-      - App__SignalrHubUrl=http://api.${SITE_HOST}/signalr
-      - App__EquipmentSignalrHubUrl=http://api.${SITE_HOST}/equipment-signalr
+      - App__IdentityUrl=https://identity.${SITE_HOST}
+      - App__FrontendUrl=https://${FRONTEND_DNS_OR_IP}
+      - App__ConferenceUrl=https://api.${SITE_HOST}/
+      - App__SignalrHubUrl=https://api.${SITE_HOST}/signalr
+      - App__EquipmentSignalrHubUrl=https://api.${SITE_HOST}/equipment-signalr
 
   sfu:
     labels:
@@ -60,9 +63,10 @@ services:
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
       - "traefik.enable=true"
       - "traefik.http.routers.sfu.rule=Host(`sfu.${SITE_HOST}`)"
-      - "traefik.http.routers.sfu.entrypoints=web"
+      - "traefik.http.routers.sfu.entrypoints=websecure"
       - "traefik.http.services.sfu.loadbalancer.healthcheck.path=/health"
       - "traefik.http.services.sfu.loadbalancer.healthcheck.port=9000"
       - "traefik.http.services.sfu.loadbalancer.server.port=3000"
       - "traefik.http.routers.sfu.middlewares=cors@docker"
-      - "traefik.http.routers.sfu.tls=false"
+      - "traefik.http.routers.sfu.tls=true"
+      - "traefik.http.routers.identity-api.tls.certresolver=letsEncrypt" # added to test ssl
