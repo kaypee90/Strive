@@ -241,7 +241,8 @@ namespace Strive
                 options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("https://timetock.com", "http://localhost:55103")
+                        builder.WithOrigins("https://timetock.com", "https://*.timetock.com", "http://localhost:55103")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
