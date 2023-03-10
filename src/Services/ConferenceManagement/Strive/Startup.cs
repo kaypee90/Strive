@@ -280,7 +280,7 @@ namespace Strive
             else
                 app.UseHsts();
 
-            app.UseCors("CorsPolicy");
+            if (env.IsDevelopment()) app.UseCors("CorsPolicy");
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
