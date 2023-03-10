@@ -24,11 +24,11 @@ services:
       # - "traefik.http.middlewares.corstwo.headers.accessControlAllowMethods=*"
       # - "traefik.http.middlewares.corstwo.headers.accessControlAllowHeaders=*,X-Requested-With,X-SignalR-User-Agent"
       # - "traefik.http.middlewares.corstwo.headers.accessControlAllowCredentials=true"
+      # - "traefik.http.routers.api.middlewares=corstwo@docker"
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.timetock.com`)"
       - "traefik.http.routers.api.entrypoints=websecure"
       - "traefik.http.services.strive.loadbalancer.healthcheck.path=/health/ready"
-      - "traefik.http.routers.api.middlewares=corstwo@docker"
       - "traefik.http.routers.api.tls=true"
       - "traefik.http.routers.api.tls.certresolver=letsEncrypt" # added to test ssl
     environment:
