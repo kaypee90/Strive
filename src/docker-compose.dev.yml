@@ -4,12 +4,12 @@ services:
   sfu:
     build:
       args:
-        - MEDIASOUP_MIN_PORT=2000
-        - MEDIASOUP_MAX_PORT=2020
+        - MEDIASOUP_MIN_PORT=40000
+        - MEDIASOUP_MAX_PORT=49999
     ports:
       - "3000:3000"
-      - "2000-2020:2000-2020/udp"
-      - "2000-2020:2000-2020/tcp"
+      - "40000-49999:40000-49999/udp"
+      - "40000-49999:40000-49999/tcp"
       - "9000:9000"
     environment:
       - DEBUG=strive-mediasoup**
