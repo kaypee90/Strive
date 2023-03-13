@@ -22,6 +22,6 @@ export STRIVE_TOKEN_SECRET=fill_in_random_token
 export STRIVE_API_KEY=fill_in_random_token
 
 export MEDIASOUP_MIN_PORT=2000 # Minimun RTC port for ICE, DTLS, RTP, etc.
-export MEDIASOUP_MAX_PORT=20000 # Maximum RTC port for ICE, DTLS, RTP, etc.
+export MEDIASOUP_MAX_PORT=2020 # Maximum RTC port for ICE, DTLS, RTP, etc.
 
 docker compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.dev.yml -f docker-compose.traefik.yml "$@"
