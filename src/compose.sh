@@ -15,7 +15,7 @@ echo "GITREF=$GITREF"
 echo "GITCOMMIT=$GITCOMMIT"
 echo "GITTIMESTAMP=$GITTIMESTAMP"
 
-export ANNOUNCED_IP=127.0.0.1
+export ANNOUNCED_IP=40.112.171.215 # 127.0.0.1
 export SITE_HOST=timetock.com
 export FRONTEND_DNS_OR_IP=timetock.com
 export STRIVE_TOKEN_SECRET=fill_in_random_token
