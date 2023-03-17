@@ -15,10 +15,13 @@ echo "GITREF=$GITREF"
 echo "GITCOMMIT=$GITCOMMIT"
 echo "GITTIMESTAMP=$GITTIMESTAMP"
 
-export ANNOUNCED_IP=127.0.0.1
+export ANNOUNCED_IP=40.112.171.215 # 127.0.0.1
 export SITE_HOST=timetock.com
 export FRONTEND_DNS_OR_IP=timetock.com
 export STRIVE_TOKEN_SECRET=fill_in_random_token
 export STRIVE_API_KEY=fill_in_random_token
 
-docker-compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.dev.yml -f docker-compose.traefik.yml "$@"
+# export MEDIASOUP_MIN_PORT=2000 # Minimun RTC port for ICE, DTLS, RTP, etc.
+# export MEDIASOUP_MAX_PORT=2020 # Maximum RTC port for ICE, DTLS, RTP, etc.
+
+docker compose -f docker-compose.yml -f docker-compose.override.yml -f docker-compose.dev.yml -f docker-compose.traefik.yml "$@"

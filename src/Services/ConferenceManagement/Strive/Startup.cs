@@ -82,7 +82,7 @@ namespace Strive
                     options.TokenValidationParameters =
                         new TokenValidationParameters {ValidateAudience = false, ValidIssuer = authOptions.Issuer};
 
-                    options.RequireHttpsMetadata = false; // !authOptions.NoSslRequired;
+                    options.RequireHttpsMetadata = !authOptions.NoSslRequired;
 
                     options.AcceptTokenFromQuery();
                 });
@@ -241,7 +241,8 @@ namespace Strive
                 options.AddPolicy("CorsPolicy",
                     builder =>
                     {
-                        builder.WithOrigins("http://timetock.com", "http://localhost:55103")
+                        builder.WithOrigins("https://timetock.com", "https://*.timetock.com", "http://localhost:55103")
+                            .SetIsOriginAllowedToAllowWildcardSubdomains()
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
@@ -276,8 +277,8 @@ namespace Strive
 
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-            // else
-            //     app.UseHsts();
+            else
+                app.UseHsts();
 
             app.UseCors("CorsPolicy");
 

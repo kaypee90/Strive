@@ -18,7 +18,7 @@ providers:
 certificatesResolvers:
   letsEncrypt:
     acme:
-      email: test@yourdomain.com
+      email: kwabenaa@wmiworldwide.com
       storage: acme.json
       # caserver: https://acme-staging-v02.api.letsencrypt.org/directory # use this for tests
       httpChallenge:
