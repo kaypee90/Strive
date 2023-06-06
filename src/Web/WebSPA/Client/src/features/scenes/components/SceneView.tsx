@@ -11,6 +11,8 @@ import presenters from '../scene-presenter-registry';
 import { selectSceneStack } from '../selectors';
 import { Scene } from '../types';
 import SceneSelector from './SceneSelector';
+import { closeDialog } from 'src/features/create-conference/reducer';
+import { useDispatch } from 'react-redux';
 
 const AUTO_HIDE_CONTROLS_DELAY_MS = 8000;
 
@@ -66,6 +68,12 @@ export default function SceneView() {
       }, AUTO_HIDE_CONTROLS_DELAY_MS);
 
    const delayHideControls = useRef<_.DebouncedFunc<() => void>>(delayHideControlsFactory());
+
+   const dispatch = useDispatch();
+   const handleClose = () => dispatch(closeDialog());
+   useEffect(() => {
+      handleClose();
+   });
 
    useEffect(() => {
       delayHideControls.current.cancel();

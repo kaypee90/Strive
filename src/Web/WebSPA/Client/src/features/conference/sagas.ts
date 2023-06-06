@@ -36,7 +36,7 @@ function* onSyncConferenceInitialized({ payload: { value } }: PayloadAction<Sync
    const participantId: string | null = yield select(selectMyParticipantId);
 
    if (participantId && syncConference.moderators.includes(participantId)) {
-      yield put(setSidebarOpen(true));
+      yield put(setSidebarOpen(false));
    }
 }
 

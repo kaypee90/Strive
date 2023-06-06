@@ -19,7 +19,7 @@
     }
   },
   "view_main": {
-    "welcome_message": "Welcome to Strive",
+    "welcome_message": "Welcome to Timetock",
     "start_new_conference": "Start new conference"
   },
   "dialog_create_conference": {

@@ -142,17 +142,17 @@ export default function CreateConferenceForm({
                   onChange={handleChangeTab}
                   aria-label="options tabs"
                >
-                  <Tab label={t('common:common')} {...a11yProps(0)} />
-                  <Tab label={t('common:moderator_plural')} {...a11yProps(1)} />
+                  <Tab label={t('common:moderator_plural')} {...a11yProps(0)} />
+                  <Tab label={t('common:common')} {...a11yProps(1)} />
                   <Tab label={t('common:permissions')} {...a11yProps(2)} />
                </Tabs>
             </Paper>
             <Box position="relative" flex={1} minHeight={0}>
                <TabPanel value={currentTab} index={0} className={classes.tabPanel}>
-                  <TabCommon form={form} />
+                  <TabModerators form={form} conferenceId={conferenceId} />
                </TabPanel>
                <TabPanel value={currentTab} index={1} className={classes.tabPanel}>
-                  <TabModerators form={form} conferenceId={conferenceId} />
+                  <TabCommon form={form} />
                </TabPanel>
                <TabPanel value={currentTab} index={2} className={classes.tabPanel}>
                   <TabPermissions form={form} />
