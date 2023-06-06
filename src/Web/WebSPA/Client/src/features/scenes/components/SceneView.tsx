@@ -73,7 +73,7 @@ export default function SceneView() {
    const handleClose = () => dispatch(closeDialog());
    useEffect(() => {
       handleClose();
-   });
+   }, []);
 
    useEffect(() => {
       delayHideControls.current.cancel();
