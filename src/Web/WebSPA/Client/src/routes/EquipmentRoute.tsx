@@ -58,9 +58,9 @@ export default function EquipmentRoute({
 
    const [hasPermissions, setHasPermissions] = useState(false);
 
-   if (!token) {
-      return <Typography>No token provided.</Typography>;
-   }
+   // if (!token) {
+   //    return <Typography>No token provided.</Typography>;
+   // }
 
    if (connectionError) {
       return <FullScreenError message={formatErrorMessage(connectionError)}></FullScreenError>;

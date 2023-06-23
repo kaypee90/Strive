@@ -15,6 +15,7 @@ import UserInteractionListener from './features/media/components/UserInteraction
 import RedirectToConference from './RedirectToConference';
 import AuthenticatedRoutes from './routes/AuthenticatedRoutes';
 import EquipmentRoute from './routes/EquipmentRoute';
+import Tags from './share-conference';
 
 const useStyles = makeStyles((theme) => ({
    toast: {
@@ -52,20 +53,7 @@ function App() {
                <Switch>
                   <Route path="/c/:id/as-equipment" exact component={EquipmentRoute} />
                   <Route path="/">
-                     <AuthenticationProvider
-                        configuration={ocidConfig}
-                        loggerLevel={oidcLog.ERROR}
-                        isEnabled
-                        callbackComponentOverride={AuthCallback}
-                        notAuthenticated={NotAuthenticated}
-                        sessionLostComponent={SessionLostComponent}
-                        authenticating={AuthenticatingComponent}
-                     >
-                        <OidcSecure>
-                           <AuthenticatedRoutes />
-                           <RedirectToConference />
-                        </OidcSecure>
-                     </AuthenticationProvider>
+                         <Tags/>
                   </Route>
                </Switch>
             </BrowserRouter>

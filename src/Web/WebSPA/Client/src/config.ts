@@ -17,11 +17,15 @@ export type AppSettings = {
 };
 
 // injected by ASP.Net Core, normalize urls. All urls don't have a trailing slash
-const appSettings: AppSettings = Object.fromEntries(
-   Object.entries((window as any).ENV).map(([name, value]) =>
-      typeof value === 'string' ? [name, value.replace(/\/$/, '')] : [name, value],
-   ),
-) as AppSettings;
+const appSettings: AppSettings = {
+
+} as AppSettings
+
+appSettings.identityUrl = "https://identity.localhost";
+appSettings.conferenceUrl = "https://api.localhost";
+appSettings.frontendUrl = "https://localhost";
+appSettings.signalrHubUrl = "https://api.localhost/signalr";
+appSettings.equipmentSignalrHubUrl = "https://api.localhost/equipment-signalr";
 
 export default appSettings;
 

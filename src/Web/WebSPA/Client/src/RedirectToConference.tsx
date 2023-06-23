@@ -4,16 +4,12 @@ import { useHistory } from 'react-router-dom';
 
 export default function RedirectToConference() {
    const history = useHistory();
-   const { oidcUser } = useReactOidc();
 
-   const redirectUrl = oidcUser.state?.url;
+
+   const redirectUrl = "/";
 
    useEffect(() => {
-      if (oidcUser.state?.url) {
-         if (history.location.pathname !== oidcUser.state?.url) {
-            history.replace(oidcUser.state.url);
-         }
-      }
+      history.replace(redirectUrl)
    }, [redirectUrl]);
 
    return null;

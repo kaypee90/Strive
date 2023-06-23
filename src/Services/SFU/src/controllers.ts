@@ -13,12 +13,12 @@ type RequestInfo = { participantId: string; conferenceId: string; connectionId: 
 
 export default function configureEndpoints(app: Express, conferenceManager: ConferenceManager): void {
    app.use(express.json());
-   app.use(jwt({ algorithms: ['HS256'], secret: config.services.tokenSecret }));
+   // app.use(jwt({ algorithms: ['HS256'], secret: config.services.tokenSecret }));
    app.use(cors());
 
    const conferenceMatchMiddleware: RequestHandler = (req, res, next) => {
-      const conferenceId: string = req.params.conferenceId;
-      const tokenConference = (req.user as JwtProperties).conference;
+      const conferenceId: string = "1";
+      const tokenConference = "1";
 
       logger.debug('REQUEST %s', req.url);
 

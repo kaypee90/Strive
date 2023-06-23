@@ -15,6 +15,7 @@ import scenes from '../features/scenes/reducer';
 import settings from '../features/settings/reducer';
 import whiteboard from '../features/whiteboard/reducer';
 import signalr from './signal/reducer';
+import general from 'src/reducer';
 
 const settingsPersistConfig: PersistConfig<any> = {
    key: 'settings',
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
    diagnostics,
    poll,
    whiteboard,
+   general,
 });
 
 export default rootReducer;
