@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { RootState } from 'src/store';
 import { useDispatch, useSelector } from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
+import appSettings from './config';
 import { TextField, Button, Dialog, DialogContent, DialogTitle, DialogActions, Fab } from '@material-ui/core';
 import { closeConferenceSharingDialog, openConferenceSharingDialog, sendInviteEmailAsync } from './reducer';
 
@@ -25,9 +26,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+type Props = {
+    conferenceId: string | null;
+ };
 
 
-export default function Tags() {
+
+export default function Tags({ conferenceId }: Props) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -57,7 +62,7 @@ export default function Tags() {
         return !results.includes(false);
     };
 
-    const payload = {"emails": selectedValues};
+    const payload = {"emails": selectedValues, conferenceLink: `${appSettings.frontendUrl}/c/${conferenceId}`};
     const sendEmails = () =>  dispatch(sendInviteEmailAsync(payload));
 
 

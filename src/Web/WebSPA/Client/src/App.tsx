@@ -53,7 +53,7 @@ function App() {
                <Switch>
                   <Route path="/c/:id/as-equipment" exact component={EquipmentRoute} />
                   <Route path="/">
-                         <Tags/>
+                         <Tags conferenceId="r5xNWrd"/>
                   </Route>
                </Switch>
             </BrowserRouter>

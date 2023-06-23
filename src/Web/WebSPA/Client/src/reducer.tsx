@@ -15,7 +15,7 @@ const initialState: GeneralState = {
 
 export const sendInviteEmailAsync = createAsyncThunk(
     'inviteemails/send',
-    async (dto: { emails: string[]}) => {
+    async (dto: { emails: string[], conferenceLink: string}) => {
        return await emailServices.create(dto);
     },
     {
