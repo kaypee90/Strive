@@ -113,7 +113,7 @@ export default function UserProfile() {
                 >
                     <Tab label="Basic Info" {...a11yProps(0)} />
                     <Tab label="Change Password" {...a11yProps(1)} />
-                    <Tab label="Manges Account" {...a11yProps(2)} />
+                    <Tab label="Manage Account" {...a11yProps(2)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <div className={classes.tabheader}>
