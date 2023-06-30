@@ -2,6 +2,7 @@ import { useReactOidc } from '@axa-fr/react-oidc-context';
 import {
    AppBar,
    Box,
+   Button,
    Chip,
    createStyles,
    IconButton,
@@ -54,6 +55,9 @@ const useStyles = makeStyles((theme) =>
          backgroundColor: theme.palette.primary.dark,
          minWidth: 0,
       },
+      btnLeave: {
+         marginRight: theme.spacing(1),
+      },
    }),
 );
 
@@ -104,6 +108,16 @@ export default function ConferenceAppBar({ chatWidth }: Props) {
                <AppBarLogo />
             </Box>
             <Box display="flex" justifyContent="flex-end" flex={1} minWidth={0}>
+               <Button
+                  className={classes.btnLeave}
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={logout as any}
+               >
+                  Leave
+               </Button>
+
                {breakoutRoomState && (
                   <BreakoutRoomChip
                      className={clsx(classes.chip, classes.breakoutRoomChip)}

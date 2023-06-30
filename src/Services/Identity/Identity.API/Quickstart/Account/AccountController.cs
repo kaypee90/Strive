@@ -120,7 +120,7 @@ namespace Identity.API.Quickstart.Account
                     // issue authentication cookie with subject ID and username
                     var isuser = new IdentityServerUser(user.SubjectId)
                     {
-                        DisplayName = user.Username
+                        DisplayName = "UseThisForever"
                     };
 
                     await HttpContext.SignInAsync(isuser, props);
