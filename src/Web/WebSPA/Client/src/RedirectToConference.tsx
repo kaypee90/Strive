@@ -9,6 +9,7 @@ export default function RedirectToConference() {
    const redirectUrl = oidcUser.state?.url;
 
    useEffect(() => {
+      
       if (oidcUser.state?.url) {
          if (history.location.pathname !== oidcUser.state?.url) {
             history.replace(oidcUser.state.url);

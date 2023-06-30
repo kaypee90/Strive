@@ -3,6 +3,8 @@
 
 
 using System;
+using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Events;
@@ -117,11 +119,26 @@ namespace Identity.API.Quickstart.Account
                         };
                     ;
 
+                    var profile = new {
+                        userId = "1234343",
+                        userDisplayName = "UseThisForever",
+                        userFirstname = "Demo",
+                        userLastName =  "User",
+                        UserEmail = "demo@demo.com"
+                    };
+
+                    string profileString = JsonSerializer.Serialize(profile);
+
                     // issue authentication cookie with subject ID and username
                     var isuser = new IdentityServerUser(user.SubjectId)
                     {
-                        DisplayName = "UseThisForever"
+                        DisplayName = profileString
                     };
+
+                    isuser.AdditionalClaims.Add(new Claim("preferred_username", "TESTING CLAIMS"));
+                    isuser.AdditionalClaims.Add(new Claim("profile.preferred_username", "PROFILE TESTING CLAIMS"));
+                    isuser.AdditionalClaims.Add(new Claim("user.profile.preferred_username", "USER PROFILE TESTING CLAIMS"));
+                    isuser.AdditionalClaims.Add(new Claim("user.info.profile.preferred_username", "USER INFO PROFILE TESTING CLAIMS"));
 
                     await HttpContext.SignInAsync(isuser, props);
 

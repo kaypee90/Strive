@@ -77,6 +77,9 @@ export default function ConferenceAppBar({ chatWidth }: Props) {
    const handleOpenSettings = () => dispatch(openSettings());
 
    const { logout, oidcUser } = useReactOidc();
+   console.log(JSON.stringify(oidcUser))
+   alert(JSON.stringify(oidcUser));
+   
    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
    const handleOpenMenu = () => setIsMenuOpen(true);
