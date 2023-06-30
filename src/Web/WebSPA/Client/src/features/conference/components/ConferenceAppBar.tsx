@@ -30,6 +30,7 @@ import { selectParticipantList } from '../selectors';
 import AppBarLogo from './appbar/AppBarLogo';
 import BreakoutRoomChip from './appbar/BreakoutRoomChip';
 import WebRtcStatusChip from './appbar/WebRtcStatusChip';
+import { mapCustomUser } from 'src/custom-oidc';
 
 const useStyles = makeStyles((theme) =>
    createStyles({
@@ -77,8 +78,7 @@ export default function ConferenceAppBar({ chatWidth }: Props) {
    const handleOpenSettings = () => dispatch(openSettings());
 
    const { logout, oidcUser } = useReactOidc();
-   console.log(JSON.stringify(oidcUser))
-   alert(JSON.stringify(oidcUser));
+   const custOidcUser = mapCustomUser(oidcUser);
    
    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -145,7 +145,7 @@ export default function ConferenceAppBar({ chatWidth }: Props) {
                {oidcUser && (
                   <Box mr={2}>
                      <Typography variant="caption">
-                        {t('conference.appbar.signed_in_as')} <b>{oidcUser.profile.name}</b>
+                        {t('conference.appbar.signed_in_as')} <b>{custOidcUser?.customProfile.userDisplayName}</b>
                      </Typography>
                   </Box>
                )}

@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'src/store';
 import { setOpen } from '../reducer';
 import DiagnosticsView from './DiagnosticsView';
+import { mapCustomUser } from 'src/custom-oidc';
+
 
 export default function DiagnosticsWindow() {
    const dispatch = useDispatch();
    const { t } = useTranslation();
    const open = useSelector((state: RootState) => state.diagnostics.open);
    const { oidcUser } = useReactOidc();
+   const custOidcUser = mapCustomUser(oidcUser);
 
    const handleUnload = () => {
       dispatch(setOpen(false));
@@ -22,7 +25,7 @@ export default function DiagnosticsWindow() {
          {open && (
             <NewWindow
                center="screen"
-               title={t('conference.diagnostics.title', { name: oidcUser.profile.name })}
+               title={t('conference.diagnostics.title', { name: custOidcUser?.customProfile.userDisplayName })}
                onUnload={handleUnload}
                features={{ width: 1000, height: 500 }}
             >

@@ -78,6 +78,15 @@ export default function ParticipantTile({ className, participant, width, height,
       setContextMenuOpen(false);
    };
 
+   // Had to be added because of what we are passing in display name from auth.
+   let displayName = null;
+   if (participant?.displayName) {
+      const profileObj = JSON.parse(participant?.displayName);
+      displayName = profileObj.userDisplayName;
+   }
+   //---------------------------------------------------------------------------
+
+
    return (
       <>
          <motion.div
@@ -90,7 +99,7 @@ export default function ParticipantTile({ className, participant, width, height,
 
             {consumer !== undefined && (
                <ParticipantTileLabel
-                  label={participant.displayName}
+                  label={displayName}
                   tileWidth={width}
                   tileHeight={height}
                   micActivated={micActivated}

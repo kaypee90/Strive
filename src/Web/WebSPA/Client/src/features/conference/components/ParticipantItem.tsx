@@ -44,6 +44,14 @@ export default function ParticipantItem({ participant }: Props) {
    const [popperOpen, setPopperOpen] = useState(false);
    const buttonRef = useRef<HTMLButtonElement>(null);
 
+   // Had to be added because of what we are passing in display name from auth.
+   let displayName = null;
+   if (participant?.displayName) {
+      const profileObj = JSON.parse(participant?.displayName);
+      displayName = profileObj.userDisplayName;
+   }
+   //---------------------------------------------------------------------------
+
    const handleClose = () => {
       setPopperOpen(false);
    };
@@ -55,7 +63,7 @@ export default function ParticipantItem({ participant }: Props) {
    return (
       <div className={classes.root}>
          <ButtonBase onClick={handleToggle} ref={buttonRef} component={motion.button} className={classes.button}>
-            <Typography variant="subtitle1">{participant ? participant?.displayName : <Skeleton />}</Typography>
+            <Typography variant="subtitle1">{participant ? displayName : <Skeleton />}</Typography>
             <IconHide hidden={!producers?.mic}>
                <AnimatedMicIcon activated={!producers?.mic?.paused} disabledColor={theme.palette.error.main} />
             </IconHide>
