@@ -16,10 +16,10 @@ export default function UserProfileForm() {
     });
    
     const { oidcUser } = useReactOidc();
-    let userName = "Demo" // FetchUserNAME  
+    let userName = "Demo"; // FetchUserNAME  
     try {
         alert(oidcUser.profile);
-        // userName = oidcUser.profile.name //
+        userName = oidcUser.profile.name!;
     }
     catch {
         console.log("Couldn't retrieve profile")
