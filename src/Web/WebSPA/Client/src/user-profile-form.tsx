@@ -15,9 +15,10 @@ export default function UserProfileForm() {
         emailAddress: ''
     });
    
-    const { oidcUser } = useReactOidc();
+   
     let userName = "Demo"; // FetchUserNAME  
     try {
+        const { oidcUser } = useReactOidc();
         alert(oidcUser.profile);
         userName = oidcUser.profile.name!;
     }
