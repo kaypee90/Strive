@@ -16,6 +16,8 @@ import RedirectToConference from './RedirectToConference';
 import AuthenticatedRoutes from './routes/AuthenticatedRoutes';
 import EquipmentRoute from './routes/EquipmentRoute';
 import Tags from './share-conference';
+import Expriement from './experiment';
+import UserProfile from './user-profile';
 
 const useStyles = makeStyles((theme) => ({
    toast: {
@@ -53,7 +55,9 @@ function App() {
                <Switch>
                   <Route path="/c/:id/as-equipment" exact component={EquipmentRoute} />
                   <Route path="/">
-                         <Tags conferenceId="r5xNWrd"/>
+                         {/* <Tags conferenceId="r5xNWrd"/> */}
+                        {/* <Expriement></Expriement> */}
+                        <UserProfile/>
                   </Route>
                </Switch>
             </BrowserRouter>
