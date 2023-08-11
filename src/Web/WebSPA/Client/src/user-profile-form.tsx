@@ -2,19 +2,42 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserProfile, updateUserProfileDetails } from './reducer';
 import { RootState } from 'src/store';
-import { Button, TextField, Grid } from '@material-ui/core';
+import { TextField, Grid } from '@material-ui/core';
 import { useReactOidc } from '@axa-fr/react-oidc-context';
+import CustomDialog from './custom-dialog';
+import ProgressButton from './progress-button';
 
 
 export default function UserProfileForm() {
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = (dialogMessage: string) => {
+        setMessage(dialogMessage)
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const dispatch = useDispatch();
     const [profileFormData, setProfileFormData] = useState({
-        firstName: '',
-        lastName: '',
-        displayName: '',
-        emailAddress: ''
+        firstName: "",
+        lastName:  "",
+        displayName: "",
+        emailAddress: "",
     });
-   
+
+    const [formErrorStatus, setFormErrorStatus] = useState({
+        firstNameError: "",
+        lastNameError: "",
+        displayNameError: "",
+        emailAddressError: ""
+    });
    
     let userName = "Demo"; // FetchUserNAME  
     try {
@@ -54,27 +77,89 @@ export default function UserProfileForm() {
         
         return timestamp + random; // Combine timestamp and random string
     };
+
+    const validateForm = (payload: any) => {
+        let firstNameError = "";
+        let lastNameError = "";
+        let displayNameError = "";
+        let emailAddressError = "";
+
+        if (!payload.firstName) {
+            firstNameError = "Firstname is required!"
+        }
+
+        if (!payload.lastName) {
+            lastNameError = "Lastname is required!"
+        }
+
+        if (!payload.displayName) {
+            displayNameError = "Display name is required!"
+        }
+
+        if (!payload.emailAddress) {
+            emailAddressError = "Email name is required!"
+        }
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(payload.emailAddress)) {
+            emailAddressError = "Invalid email address"
+        }
+
+        setFormErrorStatus({
+            firstNameError,
+            lastNameError,
+            displayNameError,
+            emailAddressError
+        })
+
+
+        if(!firstNameError
+            && !lastNameError
+            && !displayNameError
+            && !emailAddressError) {
+            dispatch(updateUserProfileDetails({payload, userName}))
+        
+            if (!loading) {
+                setSuccess(false);
+                setLoading(true);
+            }
+
+            handleClickOpen("Submitting your profile information");
+        }
+    }
+
     const handleUserProfileSubmit = (event: React.FormEvent) => {
         event.preventDefault()
+
         const randomId = generateRandomId();
         const payload = { ...profileFormData, idempotencyKey: randomId };
-        dispatch(updateUserProfileDetails({payload, userName}))
-        alert("Profle information has been submitted!")
+        validateForm(payload);
     }
 
     const {idempotencyKey, updateUserMessage} = useSelector((state: RootState) => state.general);
     useEffect(() => {
         if (idempotencyKey && updateUserMessage)
         {
-            alert(updateUserMessage)
+            if (loading) {
+                setSuccess(true);
+                setLoading(false);
+            }
+            handleClickOpen(updateUserMessage);
         }
     }, [idempotencyKey]);
 
     return (
         <form id="profileForm" onSubmit={handleUserProfileSubmit}>
+            
+            <CustomDialog 
+                title="Profile information update."
+                message={message}
+                opened={open}
+                onClose={handleClose}
+            />
+
             <Grid container spacing={3}>
                 <Grid item xs={12} md={12}>
                 <TextField
+                    error={formErrorStatus.firstNameError != ""}
                     required
                     id="firstName"
                     name="firstName"
@@ -82,10 +167,12 @@ export default function UserProfileForm() {
                     value={profileFormData.firstName}
                     onChange={handleProfileFormChange}
                     fullWidth
+                    helperText={formErrorStatus.firstNameError}
                     autoFocus/>
                 </Grid>
                 <Grid item xs={12} md={12}>
                 <TextField
+                    error={formErrorStatus.lastNameError != ""}
                     required
                     id="lastName"
                     name="lastName"
@@ -93,10 +180,12 @@ export default function UserProfileForm() {
                     value={profileFormData.lastName}
                     onChange={handleProfileFormChange}
                     fullWidth
+                    helperText={formErrorStatus.lastNameError}
                 />
                 </Grid>
                 <Grid item xs={12} md={12}>
                 <TextField
+                    error={formErrorStatus.displayNameError != ""}
                     required 
                     id="displayName"
                     name="displayName"
@@ -104,10 +193,11 @@ export default function UserProfileForm() {
                     value={profileFormData.displayName}
                     onChange={handleProfileFormChange}
                     fullWidth
-                    helperText="The name to display when you join a call."/>
+                    helperText={formErrorStatus.displayNameError}/>
                 </Grid>
                 <Grid item xs={12} md={12}>
                 <TextField
+                    error={formErrorStatus.emailAddressError != ""}
                     required
                     id="emailAddress"
                     name="emailAddress"
@@ -116,14 +206,20 @@ export default function UserProfileForm() {
                     onChange={handleProfileFormChange}
                     fullWidth
                     type='email'
+                    helperText={formErrorStatus.emailAddressError}
                 />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <Button type='submit' color='secondary' variant='contained'>Submit</Button>
+                    <ProgressButton
+                        loading={loading}
+                        success={success}
+                        onClick={handleUserProfileSubmit}
+                    />
                 </Grid>
                 
             </Grid>
+            
         </form>
     )
 }
